@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import NoteList from "../components/NoteList";
 import '@testing-library/jest-dom/extend-expect';
-import * as services from "../services/utils";
 
 const mockNotes = [
     {
@@ -17,14 +16,8 @@ const mockNotes = [
 ];
 
 test("renders note list", async () => {
-    const mockFetchAllNotes = jest.spyOn(services, "fetchAllNotes").mockResolvedValue({
-        message: "Notes fetched successfully",
-        notes: mockNotes,
-        status: 'success'
-    });
+    render(<NoteList notes={mockNotes} />);
 
-    render(<NoteList />);
-    expect(mockFetchAllNotes).toHaveBeenCalledTimes(1);
 
     expect(await screen.findByText(/Mock Title 1/i)).toBeInTheDocument();
     expect(await screen.findByText(/This is a mock content 1/i)).toBeInTheDocument();
