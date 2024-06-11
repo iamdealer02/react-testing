@@ -1,11 +1,21 @@
-import NoteList from "./components/NoteList";
+import React from "react";
 import './App.css';
+// routes
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import HomePage from "./views/HomePage";
+
 
 function App() {
+
+      
   return (
-    <div className="App">
-      <NoteList />
-    </div>
+
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Router>
+    
   );
 }
 
