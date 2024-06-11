@@ -1,18 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Note from './Note';
-import { fetchAllNotes } from '../services/utils';
 
-export default function NoteList() {
-  const [notes, setNotes] = useState([]);
-// fetch get req all notes from the server
-   useEffect(() => {
-    const data = fetchAllNotes();
-    data.then(res => {
-      setNotes(res.notes);
-    });
-    }, []);
 
-    
+export default function NoteList({ notes}) {
+
 
   return (
     <div className='note-container'>
