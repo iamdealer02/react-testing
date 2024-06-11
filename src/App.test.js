@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import NoteList from './components/NoteList';
+import '@testing-library/jest-dom/extend-expect';
 
-test('renders learn react link', () => {
+jest.mock('./components/NoteList');
+
+test('renders Notes component in App', () => {
+  NoteList.mockImplementation(() => <div>Notes Component</div>);
+
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+  expect(screen.getByText(/Notes Component/i)).toBeInTheDocument();
 });
