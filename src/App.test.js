@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
-import NoteList from './components/NoteList';
+import HomePage from './views/HomePage';
 import '@testing-library/jest-dom/extend-expect';
 
-jest.mock('./components/NoteList');
+jest.mock('./views/HomePage');
 
-test('renders Notes component in App', () => {
-  NoteList.mockImplementation(() => <div>Notes Component</div>);
+test('renders HomePage at path /', () => {
+  HomePage.mockImplementation(() => <div>HomePage</div>);
 
   render(<App />);
 
-  expect(screen.getByText(/Notes Component/i)).toBeInTheDocument();
+  expect(screen.getByText(/HomePage/i)).toBeInTheDocument();
 });
