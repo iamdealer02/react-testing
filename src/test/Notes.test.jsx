@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import Note from '../components/Note';
 
 const mockNote = {
-    "id": "1", 
+    "_id": "1", 
     "title": 'Mock Title',
     "content": 'This is a mock content',
 }
