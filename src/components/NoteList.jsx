@@ -2,8 +2,8 @@ import React from 'react';
 import Note from './Note';
 
 
-export default function NoteList({ notes}) {
-
+export default function NoteList({ notes, handleDelete}) {
+  
 
   return (
     <div className='note-container'>
@@ -12,6 +12,9 @@ export default function NoteList({ notes}) {
       {notes.map(note => (
         <div key={note._id} className='notes'>
             <Note note={note} />
+            <button data-testid='delete-btn' className='button-img' onClick={()=>handleDelete(note._id)}>
+              <img src='https://cdn-icons-png.flaticon.com/128/3221/3221897.png' alt='delete-btn'/>
+            </button>
         </div>
       ))}
     </div>

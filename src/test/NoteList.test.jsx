@@ -15,6 +15,7 @@ const mockNotes = [
     },
 ];
 
+
 test("renders note list", async () => {
     render(<NoteList notes={mockNotes} />);
 
@@ -23,4 +24,9 @@ test("renders note list", async () => {
     expect(await screen.findByText(/This is a mock content 1/i)).toBeInTheDocument();
     expect(await screen.findByText(/Mock Title 2/i)).toBeInTheDocument();
     expect(await screen.findByText(/This is a mock content 2/i)).toBeInTheDocument();
+    // expect 2 delete-btn testid to be in the document
+    expect(screen.getAllByTestId('delete-btn')).toHaveLength(2);
+
+   
+
 });
