@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import NoteList from '../components/NoteList';
 import { fetchAllNotes } from '../services/utils';
 import CreateNote from '../components/CreateNote';
-import { createNote } from '../services/utils';
+import { createNote,deleteNote } from '../services/utils';
 
 export default function HomePage() {
     const [notes, setNotes] = useState([]);
@@ -29,10 +29,24 @@ export default function HomePage() {
         });
           
     };
+    // handleDeletenote
+    const handleDelete = (_id) => {
+      alert('Note Deleted');
+            // database delete req
+
+      const data = deleteNote(_id);
+      data.then(res => {
+        const newNotes = notes.filter(note => note._id !== _id);
+        setNotes(newNotes);
+      });
+
+
+    };
+  
   return (
     <div>
         <CreateNote handleCreateNote={handleCreateNote} />
-        <NoteList notes={notes} />
+        <NoteList notes={notes} handleDelete={handleDelete} />
 
     </div>
   )
