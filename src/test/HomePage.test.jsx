@@ -25,6 +25,8 @@ beforeEach(() => {
     jest.spyOn(Services, "createNote").mockResolvedValue({ note: { title: "Mock Title", content: "This is a mock content" } });
     // spying the deleteNote function
     jest.spyOn(Services, "deleteNote").mockResolvedValue({ message: "Note Deleted" });
+    // spying the updateNote function
+    jest.spyOn(Services, "updateNote").mockResolvedValue({ note: { title: "Mock Title Updated", content: "This is a mock content Updated" } });
     // spying the alert
     // it is used for create and delete note
     jest.spyOn(window, "alert").mockImplementation(() => { });
@@ -115,3 +117,54 @@ test("add a note and then delete it", async () => {
         expect(screen.queryByText('This is a mock content')).not.toBeInTheDocument();
     });
 });
+
+test('create and edit a note', async () => {
+    render(<HomePage />);
+    
+    const titleElement = screen.getByPlaceholderText('Title');
+    const contentElement = screen.getByPlaceholderText('Content');
+    const buttonElement = screen.getByTestId('create-btn');
+  
+    userEvent.type(titleElement, 'Mock Title');
+    userEvent.type(contentElement, 'This is a mock content');
+  
+    expect(titleElement).toHaveValue('Mock Title');
+    expect(contentElement).toHaveValue('This is a mock content');
+  
+    userEvent.click(buttonElement);
+  
+    expect(await screen.findByText('Mock Title')).toBeInTheDocument();
+    expect(await screen.findByText('This is a mock content')).toBeInTheDocument();
+    expect(screen.getByTestId('delete-btn')).toBeInTheDocument();
+  
+    // Now edit the note
+    const editButton = screen.getByTestId('edit-btn');
+    userEvent.click(editButton);
+  
+    const editTitleElement = await screen.findByPlaceholderText('updated-Title');
+    const editContentElement = await screen.findByPlaceholderText('updated-Content');
+  
+    userEvent.clear(editTitleElement);
+    userEvent.type(editTitleElement, 'Mock Title Updated');
+  
+    userEvent.clear(editContentElement);
+    userEvent.type(editContentElement, 'This is a mock content Updated');
+  
+    expect(editTitleElement).toHaveValue('Mock Title Updated');
+    expect(editContentElement).toHaveValue('This is a mock content Updated');
+  
+    const updateButton = screen.getByTestId('update-btn');
+    userEvent.click(updateButton);
+  
+    await waitFor(() => {
+      expect(screen.getByText('Mock Title Updated')).toBeInTheDocument();
+      expect(screen.getByText('This is a mock content Updated')).toBeInTheDocument();
+    //   especting the old note to be deleted
+        expect(screen.queryByText('Mock Title')).not.toBeInTheDocument();
+        expect(screen.queryByText('This is a mock content')).not.toBeInTheDocument();
+    //   an alert 
+        expect(window.alert).toHaveBeenCalledWith('Note Updated');
+    });
+  });
+
+

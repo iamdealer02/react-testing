@@ -20,3 +20,13 @@ export const deleteNote = async (_id) => {
     }).then(res => res.json());
 
 }
+
+export const updateNote = async (note) => {
+    return await fetch(`http://localhost:8080/notes/${note._id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(note)
+    }).then(res => res.json());
+}
